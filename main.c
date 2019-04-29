@@ -51,26 +51,8 @@ ListElement* findTrail(MyList* list) {
 	return findElement(list->count-1, list);
 }
 
-void addElement(int data, MyList* list) {
-	ListElement* element = creatElement(data);
-
-	if(list->head == NULL) {
-		list->head = element;
-		list->count++;		
-		return;
-	}
-
-	ListElement* trail = findTrail(list);
-	trail->next = element;
-	list->count++;
-}
-
 bool addElementIdx(int idx, int data, MyList* list) {
-	if (idx > list->count-1) {
-		addElement(data, list); 
-		return true;
-	}
-	if (idx <= 0) {
+	if (idx == 0) {
 		ListElement* element = creatElement(data);
 		if (element == NULL) return false;
 		element->next = list->head;
@@ -86,6 +68,10 @@ bool addElementIdx(int idx, int data, MyList* list) {
 	previousElement->next = newElement;
 	list->count++;
 	return true;
+}
+
+void addElement(int data, MyList* list) {
+	addElementIdx(list->count, data, list);
 }
 
 bool addElements(int n, int* idx, int* data, MyList* list) {
