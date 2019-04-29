@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef enum {false, true} bool;
 
 typedef struct List_Element {
 	int data;
@@ -53,6 +54,12 @@ void addElement(int data, MyList* list) {
 	list->count++;
 }
 
+bool addElementIdx(int idx, int data, MyList* list) {
+	if (idx > list->count-1) addElement(data, list); return true;
+
+}
+
+
 void showList(MyList list) {
 	ListElement* p = list.head;
 	printf("\nElements of the list are : ");
@@ -63,6 +70,7 @@ void showList(MyList list) {
 	printf("\n\n");
 }
 
+//////Debug & Main////////////////////////////////////////////////////////////////////////////
 void debug(void) {	
 	MyList list;
 	startList(&list);
@@ -72,6 +80,7 @@ void debug(void) {
 	addElement(15, &list);
 	addElement(17, &list);
 
+	addElementIdx(5, 7, &list);
 	showList(list);
 }
 
