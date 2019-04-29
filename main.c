@@ -55,7 +55,19 @@ void addElement(int data, MyList* list) {
 }
 
 bool addElementIdx(int idx, int data, MyList* list) {
-	if (idx > list->count-1) addElement(data, list); return true;
+	if (idx > list->count-1) {
+		addElement(data, list); 
+		return true;
+	}
+	if (idx <= 0) {
+		ListElement* element = (ListElement*) malloc(sizeof(ListElement));
+		if (element == NULL) return false;
+		element->data = data;
+		element->next = list->head;
+		list->head = element;
+		return true;
+	}
+
 
 }
 
@@ -80,7 +92,7 @@ void debug(void) {
 	addElement(15, &list);
 	addElement(17, &list);
 
-	addElementIdx(5, 7, &list);
+	addElementIdx(0, 5, &list);
 	showList(list);
 }
 
