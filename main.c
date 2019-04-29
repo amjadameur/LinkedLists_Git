@@ -27,7 +27,7 @@ MyList* startList(void) {
 	printf("The List Has Been Created !\n");
 	return list;
 }
- 
+
 ListElement* creatElement(int data) {
 	ListElement* element = (ListElement*) malloc(sizeof(ListElement));
 	if (element == NULL)
@@ -79,11 +79,11 @@ bool addElementIdx(int idx, int data, MyList* list) {
 		return true;
 	}
 
-	ListElement* element    = findElement(idx-1, list);
-	ListElement* newElement = creatElement(data);
-	if(element == NULL || newElement == NULL) return false;
-	newElement->next = element->next;
-	element->next = newElement;
+	ListElement* previousElement = findElement(idx-1, list);
+	ListElement* newElement      = creatElement(data);
+	if(previousElement == NULL || newElement == NULL) return false;
+	newElement->next = previousElement->next;
+	previousElement->next = newElement;
 	list->count++;
 	return true;
 }
@@ -94,6 +94,35 @@ bool addElements(int n, int* idx, int* data, MyList* list) {
 	}
 }
 
+bool removeElement(int idx, MyList* list) {
+	if (list->count <= 0 || idx > list->count-1 || idx < 0) return false;
+
+	
+	if(list->count-1 == idx) {
+		ListElement* elementPastTrail = findElement(list->count-2  , list);
+		free(elementPastTrail->next);
+		elementPastTrail->next = NULL;
+     	list->count--;		
+		return true;
+	}
+
+	if(idx == 0) {
+		ListElement* head = list->head;
+		list->head = list->head->next;
+		free(head);
+		list->count--;		
+		return true;		
+	}
+
+	ListElement* previousElement  = findElement(idx-1, list);
+	ListElement* currentElement   = findElement(idx  , list);
+
+	previousElement->next = currentElement->next;
+	free(currentElement);
+	list->count--;
+	return true;
+}
+
 void showList(MyList list) {
 	ListElement* p = list.head;
 	printf("\nElements of the list are : ");
@@ -101,7 +130,7 @@ void showList(MyList list) {
 		printf("%d ", p->data);
 		p = p->next;
 	}
-	printf("\n\n");
+	printf("\nCount is : %d\n", list.count);
 }
 
 //////Debug & Main////////////////////////////////////////////////////////////////////////////
@@ -115,18 +144,15 @@ void debug(void) {
 
 	showList(*list);
 
-	addElementIdx(3, 5, list);
-	showList(*list);
-
 	free(list);
 }
 
 int main(int argc, char const *argv[])
 {
-	MyList* list = startList();
-	
+	MyList* list = startList();	
 	debug();
 
+	
 	free(list);
 	return 0;
 }
