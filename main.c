@@ -32,12 +32,17 @@ ListElement* creatElement(int data) {
 	element->next = NULL;
 }
 
-ListElement* findTrail(MyList* list) {	
+ListElement* findElement(int idx, MyList* list) {
+	if(idx > list->count-1 || idx < 0) return NULL;	
 	ListElement* p = list->head;
-	while(p->next != NULL) {
+	while(idx--) {
 		p = p->next;
 	}
 	return p;
+}
+
+ListElement* findTrail(MyList* list) {	
+	return findElement(list->count-1, list);
 }
 
 void addElement(int data, MyList* list) {
@@ -85,6 +90,7 @@ void showList(MyList list) {
 //////Debug & Main////////////////////////////////////////////////////////////////////////////
 void debug(void) {	
 	MyList list;
+	ListElement element;
 	startList(&list);
 
 	addElement(7, &list);
@@ -94,6 +100,9 @@ void debug(void) {
 
 	addElementIdx(0, 5, &list);
 	showList(list);
+
+	element = *findElement(3, &list);
+	printf("found : %d\n", element.data);
 }
 
 int main(int argc, char const *argv[])
