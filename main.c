@@ -16,10 +16,16 @@ typedef struct My_List {
 
 
 
-void startList(MyList* list) {
+MyList* startList(void) {
+	MyList* list = (MyList*) malloc(sizeof(MyList));
+	if (list == NULL) {
+		printf("Probleme creating a linked list !\n");
+		return NULL;
+	}
 	list->count = 0;
 	list->head  = NULL;
 	printf("The List Has Been Created !\n");
+	return list;
 }
  
 ListElement* creatElement(int data) {
@@ -72,10 +78,13 @@ bool addElementIdx(int idx, int data, MyList* list) {
 		list->head = element;
 		return true;
 	}
-
-
 }
 
+bool addElements(int n, int* idx, int* data, MyList* list) {
+	for (int i = 0; i < n; ++i)	{
+		addElementIdx(idx[i], data[i], list);
+	}
+}
 
 void showList(MyList list) {
 	ListElement* p = list.head;
@@ -89,27 +98,24 @@ void showList(MyList list) {
 
 //////Debug & Main////////////////////////////////////////////////////////////////////////////
 void debug(void) {	
-	MyList list;
-	ListElement element;
-	startList(&list);
+	MyList* list = startList();
 
-	addElement(7, &list);
-	addElement(14, &list);
-	addElement(15, &list);
-	addElement(17, &list);
+	addElement(7,  list);
+	addElement(14, list);
+	addElement(15, list);
+	addElement(17, list);
 
-	addElementIdx(0, 5, &list);
-	showList(list);
+	showList(*list);
 
-	element = *findElement(3, &list);
-	printf("found : %d\n", element.data);
+	free(list);
 }
 
 int main(int argc, char const *argv[])
 {
-	MyList list;
-	startList(&list);
+	MyList* list = startList();
 	
 	debug();
+
+	free(list);
 	return 0;
 }
