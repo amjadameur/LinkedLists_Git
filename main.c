@@ -80,24 +80,25 @@ bool addElements(int n, int* idx, int* data, MyList* list) {
 	}
 }
 
-bool removeElement(int idx, MyList* list) {
+bool deleteElement(int idx, MyList* list) {
 	if (list->count <= 0 || idx > list->count-1 || idx < 0) return false;
 
-	
-	if(list->count-1 == idx) {
-		ListElement* elementPastTrail = findElement(list->count-2  , list);
-		free(elementPastTrail->next);
-		elementPastTrail->next = NULL;
-     	list->count--;		
-		return true;
-	}
-
+	// element to be discarded is the head
 	if(idx == 0) {
 		ListElement* head = list->head;
 		list->head = list->head->next;
 		free(head);
 		list->count--;		
 		return true;		
+	}
+
+	// element to be discarded is the trail 
+	if(list->count-1 == idx) {
+		ListElement* elementPastTrail = findElement(list->count-2  , list);
+		free(elementPastTrail->next);
+		elementPastTrail->next = NULL;
+     	list->count--;		
+		return true;
 	}
 
 	ListElement* previousElement  = findElement(idx-1, list);
@@ -107,6 +108,13 @@ bool removeElement(int idx, MyList* list) {
 	free(currentElement);
 	list->count--;
 	return true;
+}
+
+void deleteList(MyList* list) {
+	for (int i = list->count-1; i >= 0; i--) {
+		deleteElement(i, list);
+	}
+	free(list);
 }
 
 void showList(MyList list) {
@@ -120,6 +128,20 @@ void showList(MyList list) {
 }
 
 //////Debug & Main////////////////////////////////////////////////////////////////////////////
+void debug(void);
+void test(void);
+
+int main(int argc, char const *argv[])
+{
+	MyList* list = startList();	
+	debug();
+
+	test();
+
+	deleteList(list);
+	return 0;
+}
+
 void debug(void) {	
 	MyList* list = startList();
 
@@ -130,15 +152,19 @@ void debug(void) {
 
 	showList(*list);
 
-	free(list);
+	deleteList(list);
 }
 
-int main(int argc, char const *argv[])
-{
-	MyList* list = startList();	
-	debug();
+void test(void) {
+	void* p;// = (void*) malloc(sizeof(void));
+	int* a = (int*) malloc(sizeof(int));
+	*a = 2;
+	p = a;
+	printf("a : %d\n", *a);
+	//*((int*) p) = 5;
+	//printf("a : %d\n", *a);
 
-	
-	free(list);
-	return 0;
 }
+
+
+
