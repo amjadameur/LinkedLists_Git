@@ -2,12 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Hi tmp2
-
 typedef enum {false, true} bool;
 
 typedef struct List_Element {
-	int data;
+	void* data;
 	struct List_Element* next;	
 } ListElement;
 
@@ -15,7 +13,6 @@ typedef struct My_List {
 	int count;
 	ListElement* head;
 } MyList;
-
 
 
 MyList* startList(void) {
@@ -30,12 +27,13 @@ MyList* startList(void) {
 	return list;
 }
 
-ListElement* creatElement(int data) {
+ListElement* creatElement(void* data) {
 	ListElement* element = (ListElement*) malloc(sizeof(ListElement));
 	if (element == NULL)
 	{
 		printf("Error while adding element, couldn't allocate new element\n");
 	}
+	element->data = (void*) malloc(sizeof(void));
 	element->data = data;
 	element->next = NULL;
 }
@@ -53,7 +51,7 @@ ListElement* findTrail(MyList* list) {
 	return findElement(list->count-1, list);
 }
 
-bool addElementIdx(int idx, int data, MyList* list) {
+bool addElementIdx(int idx, void* data, MyList* list) {
 	if (idx == 0) {
 		ListElement* element = creatElement(data);
 		if (element == NULL) return false;
@@ -72,14 +70,8 @@ bool addElementIdx(int idx, int data, MyList* list) {
 	return true;
 }
 
-void addElement(int data, MyList* list) {
+void addElement(void* data, MyList* list) {
 	addElementIdx(list->count, data, list);
-}
-
-bool addElements(int n, int* idx, int* data, MyList* list) {
-	for (int i = 0; i < n; ++i)	{
-		addElementIdx(idx[i], data[i], list);
-	}
 }
 
 bool deleteElement(int idx, MyList* list) {
@@ -89,6 +81,7 @@ bool deleteElement(int idx, MyList* list) {
 	if(idx == 0) {
 		ListElement* head = list->head;
 		list->head = list->head->next;
+		free(head->data);
 		free(head);
 		list->count--;		
 		return true;		
@@ -97,9 +90,10 @@ bool deleteElement(int idx, MyList* list) {
 	// element to be discarded is the trail 
 	if(list->count-1 == idx) {
 		ListElement* elementPastTrail = findElement(list->count-2  , list);
+		free(elementPastTrail->next->data);
 		free(elementPastTrail->next);
 		elementPastTrail->next = NULL;
-     	list->count--;		
+		list->count--;		
 		return true;
 	}
 
@@ -107,6 +101,7 @@ bool deleteElement(int idx, MyList* list) {
 	ListElement* currentElement   = findElement(idx  , list);
 
 	previousElement->next = currentElement->next;
+	free(currentElement->data);
 	free(currentElement);
 	list->count--;
 	return true;
@@ -119,14 +114,56 @@ void deleteList(MyList* list) {
 	free(list);
 }
 
-void showList(MyList list) {
+void* int_to_void(int val) {
+	int* p = (int*) malloc(sizeof(int));
+	*p = val;
+	return (void*) p;
+}
+
+
+void* char_to_void(char val) {
+	char* p = (char*) malloc(sizeof(char));
+	*p = val;
+	return (void*) p;
+}
+
+
+void showList_int(MyList list) {
 	ListElement* p = list.head;
-	printf("\nElements of the list are : ");
-	for (int i = 0; i < list.count; ++i) {
-		printf("%d ", p->data);
-		p = p->next;
-	}
+	void* data = (void*) malloc(sizeof(void));
+	int val;
+
 	printf("\nCount is : %d\n", list.count);
+	printf("Elements of the list are : ");
+	for (int i = 0; i < list.count; ++i) {
+		data = p->data;
+		val  = *((int*) data); 
+		printf("%d ", val);
+		p = p->next;
+		data = NULL;
+	}
+	printf("\n\n");
+
+	free(data);
+}
+
+void showList_char(MyList list) {
+	ListElement* p = list.head;
+	void* data = (void*) malloc(sizeof(void));
+	char val;
+
+	printf("\nCount is : %d\n", list.count);
+	printf("Elements of the list are : ");
+	for (int i = 0; i < list.count; ++i) {
+		data = p->data;
+		val  = *((char*) data); 
+		printf("%c ", val);
+		p = p->next;
+		data = NULL;
+	}
+	printf("\n\n");
+
+	free(data);
 }
 
 //////Debug & Main////////////////////////////////////////////////////////////////////////////
@@ -146,25 +183,19 @@ int main(int argc, char const *argv[])
 
 void debug(void) {	
 	MyList* list = startList();
+	int* a = (int*) malloc(sizeof(int));
+	*a = 5;
+	addElement(char_to_void('a'), list);
+	addElement(char_to_void('b'), list);
+	addElement(char_to_void('c'), list);
+	addElement(char_to_void('d'), list);
 
-	addElement(7,  list);
-	addElement(14, list);
-	addElement(15, list);
-	addElement(17, list);
-
-	showList(*list);
+	showList_char(*list);
 
 	deleteList(list);
 }
 
 void test(void) {
-	void* p;// = (void*) malloc(sizeof(void));
-	int* a = (int*) malloc(sizeof(int));
-	*a = 2;
-	p = a;
-	printf("a : %d\n", *a);
-	//*((int*) p) = 5;
-	//printf("a : %d\n", *a);
 
 }
 
