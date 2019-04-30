@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Hi myproject
-// Hi tmp
+// Hi tmp2
+
 typedef enum {false, true} bool;
 
 typedef struct List_Element {
