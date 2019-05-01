@@ -6,3 +6,5 @@ out
 linkedList\.h\.gch
 
 main\.c
+
+Makefile

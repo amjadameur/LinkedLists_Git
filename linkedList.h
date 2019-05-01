@@ -24,7 +24,7 @@ Node* createNode(void* data);
 
 Node* getNode(int idx, List* list);
 
-void* getFromList(int idx, List* list);
+void* getDataFromList(int idx, List* list);
 
 Node* getTrail(List* list);
 
@@ -42,10 +42,12 @@ void appendIntList(int data, List* list);
 
 void appendCharList(char data, List* list);
 
-int  getIntFromList(int idx, List* list);
+int  getIntList(int idx, List* list);
 
-char getCharFromList(int idx, List* list);
+char getCharList(int idx, List* list);
 
+void setIntList(int idx, int data, List* list);
 
+void setCharList(int idx, char data, List* list);
 
 #endif

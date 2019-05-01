@@ -39,7 +39,7 @@ Node* getTrailNode(List* list) {
 	return getNode(list->count-1, list);
 }
 
-void* getFromList(int idx, List* list) {
+void* getDataFromList(int idx, List* list) {
 	return getNode(idx, list)->data;
 }
 
@@ -109,13 +109,9 @@ void deleteList(List* list) {
 
 //////// Bonus functions :
 void appendIntList(int data, List* list) {
-/*	int* p = (int*) malloc(sizeof(int));
+	int* p = (int*) malloc(sizeof(int));
 	*p = data;
-	appendList((void*) p, list);
-*/
-	void* p = (void*) malloc(sizeof(void));
-	*((int*) p) = data;
-	appendNode(p, list);
+	appendNode((void*) p, list);
 }
 
 void appendCharList(char data, List* list) {
@@ -125,10 +121,19 @@ void appendCharList(char data, List* list) {
 }
 
 
-int getIntFromList(int idx, List* list) {
-	return *((int*) getFromList(idx, list));
+int getIntList(int idx, List* list) {
+	return *((int*) getDataFromList(idx, list));
 }
 
-char getCharFromList(int idx, List* list) {
-	return *((char*) getFromList(idx, list));
+char getCharList(int idx, List* list) {
+	return *((char*) getDataFromList(idx, list));
+}
+
+
+void setIntList(int idx, int data, List* list) {
+	*((int*) getDataFromList(idx, list)) = data;
+}
+
+void setCharList(int idx, char data, List* list) {
+	*((char*) getDataFromList(idx, list)) = data;
 }
