@@ -28,9 +28,9 @@ void* getFromList(int idx, List* list);
 
 Node* getTrail(List* list);
 
-bool insertList(int idx, void* data, List* list);
+bool insertNode(int idx, void* data, List* list);
 
-void appendList(void* data, List* list);
+void appendNode(void* data, List* list);
 
 bool deleteNode(int idx, List* list);
 

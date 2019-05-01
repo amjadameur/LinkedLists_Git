@@ -43,7 +43,7 @@ void* getFromList(int idx, List* list) {
 	return getNode(idx, list)->data;
 }
 
-bool insertList(int idx, void* data, List* list) {
+bool insertNode(int idx, void* data, List* list) {
 	if (idx == 0) {
 		Node* node = createNode(data);
 		if (node == NULL) return false;
@@ -62,8 +62,8 @@ bool insertList(int idx, void* data, List* list) {
 	return true;
 }
 
-void appendList(void* data, List* list) {
-	insertList(list->count, data, list);
+void appendNode(void* data, List* list) {
+	insertNode(list->count, data, list);
 }
 
 bool deleteNode(int idx, List* list) {
@@ -107,10 +107,6 @@ void deleteList(List* list) {
 }
 
 
-
-
-
-
 //////// Bonus functions :
 void appendIntList(int data, List* list) {
 /*	int* p = (int*) malloc(sizeof(int));
@@ -119,13 +115,13 @@ void appendIntList(int data, List* list) {
 */
 	void* p = (void*) malloc(sizeof(void));
 	*((int*) p) = data;
-	appendList(p, list);
+	appendNode(p, list);
 }
 
 void appendCharList(char data, List* list) {
 	char* p = (char*) malloc(sizeof(char));
 	*p = data;
-	appendList((void*) p, list);
+	appendNode((void*) p, list);
 }
 
 

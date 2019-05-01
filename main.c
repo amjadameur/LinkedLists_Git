@@ -1,6 +1,4 @@
 #include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "linkedList.h"
 
@@ -10,33 +8,19 @@ int main(int argc, char const *argv[])
 {
 	List* list = createList();
 
-	
-/*
-	int* a1 = (int*) malloc(sizeof(int));
-	int* a2 = (int*) malloc(sizeof(int));
+	appendIntList(5, list);
+	appendIntList(7, list);
+	appendIntList(9, list);
+	appendIntList(10, list);
 
-	int* p = (int*) malloc(sizeof(int));
-	
-	*a1 = 5;
-	*a2 = 10;
+	deleteNode(2, list);
 
-	appendList((void*) a1, list);
-	p = (int*) list->head->data;
-	printf("val1 : %d\n", *p);
-	p = NULL;
-	COUNT;
+	for (int i = 0; i < list->count; ++i)
+	{
+		printf("%d ", getIntFromList(i, list));
+	}
+	printf("\n\n");
 
-	appendList((void*) a2, list); 
-	p = (int*) list->head->next->data;
-	
-	if(p == NULL) printf("BAD\n");
-	printf("size : %zu\n", sizeof(*p));
-
-	printf("val2 : %d\n", *p);
-	p = NULL;
-
-	COUNT;
-*/
 	deleteList(list);
 	return 0;
 }
