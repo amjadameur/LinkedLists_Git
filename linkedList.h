@@ -6,35 +6,44 @@
 
 typedef enum {false, true} bool;
 
-typedef struct List_Element {
+typedef struct ListNode {
 	void* data;
-	struct List_Element* next;	
-} ListElement;
+	struct ListNode* next;	
+} Node;
 
-typedef struct My_List {
+typedef struct LinkedList {
 	int count;
-	ListElement* head;
-} MyList;
+	Node* head;
+} List;
 
 
-MyList* createList(void);
+////////////////////////////////////////// Fondamental functions :
+List* createList(void);
 
-ListElement* creatElement(void* data);
+Node* createNode(void* data);
 
-ListElement* getElement(int idx, MyList* list);
+Node* getNode(int idx, List* list);
 
-ListElement* getTrail(MyList* list);
+void* getFromList(int idx, List* list);
 
-bool insertElement(int idx, void* data, MyList* list);
+Node* getTrail(List* list);
 
-void addElement(void* data, MyList* list);
+bool insertList(int idx, void* data, List* list);
 
-void addIntElement(int data, MyList* list);
+void appendList(void* data, List* list);
 
-void addCharElement(int data, MyList* list);
+bool deleteNode(int idx, List* list);
 
-bool deleteElement(int idx, MyList* list);
+void deleteList(List* list);
 
-void deleteList(MyList* list);
+
+//////////////////////////////////////////// Bonus functions :
+void appendIntList(int data, List* list);
+
+void appendCharList(char data, List* list);
+
+int  getIntFromList(int idx, List* list);
+
+char getCharFromList(int idx, List* list);
 
 #endif

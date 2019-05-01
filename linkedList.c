@@ -1,7 +1,7 @@
 #include "linkedList.h"
 
-MyList* createList(void) {
-	MyList* list = (MyList*) malloc(sizeof(MyList));
+List* createList(void) {
+	List* list = (List*) malloc(sizeof(List));
 	if (list == NULL) {
 		printf("Probleme creating a linked list !\n");
 		return NULL;
@@ -12,71 +12,66 @@ MyList* createList(void) {
 	return list;
 }
 
-ListElement* creatElement(void* data) {
-	ListElement* element = (ListElement*) malloc(sizeof(ListElement));
-	if (element == NULL)
+Node* createNode(void* data) {
+	Node* node = (Node*) malloc(sizeof(Node));
+	if (node == NULL)
 	{
 		printf("Error while adding element, couldn't allocate new element\n");
 	}
-	element->data = (void*) malloc(sizeof(void));
-	element->data = data;
-	element->next = NULL;
+	node->data = (void*) malloc(sizeof(void));
+	node->data = data;
+	node->next = NULL;
 }
 
-ListElement* getElement(int idx, MyList* list) {
-	if(idx > list->count-1 || idx < 0) return NULL;	
-	ListElement* p = list->head;
-	while(idx--) {
-		p = p->next;
+Node* getNode(int idx, List* list) {
+	if(idx > list->count-1 || idx < 0) {
+		printf("Index out of range\n");
+		return NULL;	
 	}
-	return p;
+	Node* node = list->head;
+	while(idx--) {
+		node = node->next;
+	}
+	return node;
 }
 
-ListElement* getTrail(MyList* list) {	
-	return getElement(list->count-1, list);
+Node* getTrailNode(List* list) {	
+	return getNode(list->count-1, list);
 }
 
-bool insertElement(int idx, void* data, MyList* list) {
+void* getFromList(int idx, List* list) {
+	return getNode(idx, list)->data;
+}
+
+bool insertList(int idx, void* data, List* list) {
 	if (idx == 0) {
-		ListElement* element = creatElement(data);
-		if (element == NULL) return false;
-		element->next = list->head;
-		list->head = element;
+		Node* node = createNode(data);
+		if (node == NULL) return false;
+		node->next = list->head;
+		list->head = node;
 		list->count++;
 		return true;
 	}
 
-	ListElement* previousElement = getElement(idx-1, list);
-	ListElement* newElement      = creatElement(data);
-	if(previousElement == NULL || newElement == NULL) return false;
-	newElement->next = previousElement->next;
-	previousElement->next = newElement;
+	Node* previousNode = getNode(idx-1, list);
+	Node* newNode      = createNode(data);
+	if(previousNode == NULL || newNode == NULL) return false;
+	newNode->next = previousNode->next;
+	previousNode->next = newNode;
 	list->count++;
 	return true;
 }
 
-void addElement(void* data, MyList* list) {
-	insertElement(list->count, data, list);
+void appendList(void* data, List* list) {
+	insertList(list->count, data, list);
 }
 
-void addIntElement(int data, MyList* list) {
-	int* p = (int*) malloc(sizeof(int));
-	*p = data;
-	addElement((void*) p, list);
-}
-
-void addCharElement(char data, MyList* list) {
-	char* p = (char*) malloc(sizeof(char));
-	*p = data;
-	addElement((void*) p, list);
-}
-
-bool deleteElement(int idx, MyList* list) {
+bool deleteNode(int idx, List* list) {
 	if (list->count <= 0 || idx > list->count-1 || idx < 0) return false;
 
 	// element to be discarded is the head
 	if(idx == 0) {
-		ListElement* head = list->head;
+		Node* head = list->head;
 		list->head = list->head->next;
 		free(head->data);
 		free(head);
@@ -86,7 +81,7 @@ bool deleteElement(int idx, MyList* list) {
 
 	// element to be discarded is the trail 
 	if(list->count-1 == idx) {
-		ListElement* elementPastTrail = getElement(list->count-2  , list);
+		Node* elementPastTrail = getNode(list->count-2  , list);
 		free(elementPastTrail->next->data);
 		free(elementPastTrail->next);
 		elementPastTrail->next = NULL;
@@ -94,19 +89,50 @@ bool deleteElement(int idx, MyList* list) {
 		return true;
 	}
 
-	ListElement* previousElement  = getElement(idx-1, list);
-	ListElement* currentElement   = getElement(idx  , list);
+	Node* previousNode  = getNode(idx-1, list);
+	Node* currentNode   = getNode(idx  , list);
 
-	previousElement->next = currentElement->next;
-	free(currentElement->data);
-	free(currentElement);
+	previousNode->next = currentNode->next;
+	free(currentNode->data);
+	free(currentNode);
 	list->count--;
 	return true;
 }
 
-void deleteList(MyList* list) {
+void deleteList(List* list) {
 	for (int i = list->count-1; i >= 0; i--) {
-		deleteElement(i, list);
+		deleteNode(i, list);
 	}
 	free(list);
+}
+
+
+
+
+
+
+//////// Bonus functions :
+void appendIntList(int data, List* list) {
+/*	int* p = (int*) malloc(sizeof(int));
+	*p = data;
+	appendList((void*) p, list);
+*/
+	void* p = (void*) malloc(sizeof(void));
+	*((int*) p) = data;
+	appendList(p, list);
+}
+
+void appendCharList(char data, List* list) {
+	char* p = (char*) malloc(sizeof(char));
+	*p = data;
+	appendList((void*) p, list);
+}
+
+
+int getIntFromList(int idx, List* list) {
+	return *((int*) getFromList(idx, list));
+}
+
+char getCharFromList(int idx, List* list) {
+	return *((char*) getFromList(idx, list));
 }
