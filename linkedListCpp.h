@@ -8,33 +8,37 @@
 #include <string>
 
 class Node {
-public :
+	public :
 	void* data;
 	Node* next;
+
+	Node(void) {}
+	Node(void* data);
+
+	void* getData(void);
 };
+
+
 
 class List {
-private :
+	public :
 	int count;
 	Node* head;
 
-public :
+	List();
+
+	Node* getNode(int idx);
+
+	//void* getDataFromList(int idx);
+
+	Node* getTrail(void);
+
+	void insertNode(int idx, void* data);
 
 };
+
 /*
-typedef struct ListNode {
-	void* data;
-	struct ListNode* next;	
-} Node;
-
-typedef struct LinkedList {
-	int count;
-	Node* head;
-} List;
-
-
 ////////////////////////////////////////// Fondamental functions :
-List* createList(void);
 
 Node* createNode(void* data);
 
