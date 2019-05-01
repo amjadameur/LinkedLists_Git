@@ -1,6 +1,6 @@
 #include "linkedList.h"
 
-MyList* startList(void) {
+MyList* createList(void) {
 	MyList* list = (MyList*) malloc(sizeof(MyList));
 	if (list == NULL) {
 		printf("Probleme creating a linked list !\n");
@@ -57,6 +57,18 @@ bool insertElement(int idx, void* data, MyList* list) {
 
 void addElement(void* data, MyList* list) {
 	insertElement(list->count, data, list);
+}
+
+void addIntElement(int data, MyList* list) {
+	int* p = (int*) malloc(sizeof(int));
+	*p = data;
+	addElement((void*) p, list);
+}
+
+void addCharElement(char data, MyList* list) {
+	char* p = (char*) malloc(sizeof(char));
+	*p = data;
+	addElement((void*) p, list);
 }
 
 bool deleteElement(int idx, MyList* list) {

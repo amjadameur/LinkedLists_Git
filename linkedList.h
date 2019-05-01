@@ -17,7 +17,7 @@ typedef struct My_List {
 } MyList;
 
 
-MyList* startList(void);
+MyList* createList(void);
 
 ListElement* creatElement(void* data);
 
@@ -28,6 +28,10 @@ ListElement* getTrail(MyList* list);
 bool insertElement(int idx, void* data, MyList* list);
 
 void addElement(void* data, MyList* list);
+
+void addIntElement(int data, MyList* list);
+
+void addCharElement(int data, MyList* list);
 
 bool deleteElement(int idx, MyList* list);
 
