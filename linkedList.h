@@ -21,11 +21,11 @@ MyList* startList(void);
 
 ListElement* creatElement(void* data);
 
-ListElement* findElement(int idx, MyList* list);
+ListElement* getElement(int idx, MyList* list);
 
-ListElement* findTrail(MyList* list);
+ListElement* getTrail(MyList* list);
 
-bool addElementIdx(int idx, void* data, MyList* list);
+bool insertElement(int idx, void* data, MyList* list);
 
 void addElement(void* data, MyList* list);
 

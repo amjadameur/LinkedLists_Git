@@ -23,7 +23,7 @@ ListElement* creatElement(void* data) {
 	element->next = NULL;
 }
 
-ListElement* findElement(int idx, MyList* list) {
+ListElement* getElement(int idx, MyList* list) {
 	if(idx > list->count-1 || idx < 0) return NULL;	
 	ListElement* p = list->head;
 	while(idx--) {
@@ -32,11 +32,11 @@ ListElement* findElement(int idx, MyList* list) {
 	return p;
 }
 
-ListElement* findTrail(MyList* list) {	
-	return findElement(list->count-1, list);
+ListElement* getTrail(MyList* list) {	
+	return getElement(list->count-1, list);
 }
 
-bool addElementIdx(int idx, void* data, MyList* list) {
+bool insertElement(int idx, void* data, MyList* list) {
 	if (idx == 0) {
 		ListElement* element = creatElement(data);
 		if (element == NULL) return false;
@@ -46,7 +46,7 @@ bool addElementIdx(int idx, void* data, MyList* list) {
 		return true;
 	}
 
-	ListElement* previousElement = findElement(idx-1, list);
+	ListElement* previousElement = getElement(idx-1, list);
 	ListElement* newElement      = creatElement(data);
 	if(previousElement == NULL || newElement == NULL) return false;
 	newElement->next = previousElement->next;
@@ -56,7 +56,7 @@ bool addElementIdx(int idx, void* data, MyList* list) {
 }
 
 void addElement(void* data, MyList* list) {
-	addElementIdx(list->count, data, list);
+	insertElement(list->count, data, list);
 }
 
 bool deleteElement(int idx, MyList* list) {
@@ -74,7 +74,7 @@ bool deleteElement(int idx, MyList* list) {
 
 	// element to be discarded is the trail 
 	if(list->count-1 == idx) {
-		ListElement* elementPastTrail = findElement(list->count-2  , list);
+		ListElement* elementPastTrail = getElement(list->count-2  , list);
 		free(elementPastTrail->next->data);
 		free(elementPastTrail->next);
 		elementPastTrail->next = NULL;
@@ -82,8 +82,8 @@ bool deleteElement(int idx, MyList* list) {
 		return true;
 	}
 
-	ListElement* previousElement  = findElement(idx-1, list);
-	ListElement* currentElement   = findElement(idx  , list);
+	ListElement* previousElement  = getElement(idx-1, list);
+	ListElement* currentElement   = getElement(idx  , list);
 
 	previousElement->next = currentElement->next;
 	free(currentElement->data);
