@@ -1,11 +1,27 @@
 #ifndef LINKEDLISTCPP_H
 #define LINKEDLISTCPP_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "stdlib.h"
+#include "assert.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 
-typedef enum {false, true} bool;
+class Node {
+public :
+	void* data;
+	Node* next;
+};
 
+class List {
+private :
+	int count;
+	Node* head;
+
+public :
+
+};
+/*
 typedef struct ListNode {
 	void* data;
 	struct ListNode* next;	
@@ -49,5 +65,5 @@ char getCharList(int idx, List* list);
 void setIntList(int idx, int data, List* list);
 
 void setCharList(int idx, char data, List* list);
-
+*/
 #endif
