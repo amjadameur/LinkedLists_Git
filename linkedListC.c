@@ -1,5 +1,70 @@
 #include "linkedList.h"
 
+List* createList(void) {
+	List* list = (List*) malloc(sizeof(List));
+	if (list == NULL) {
+		printf("Probleme creating a linked list !\n");
+		return NULL;
+	}
+	list->count = 0;
+	list->head  = NULL;
+	printf("The List Has Been Created !\n");
+	return list;
+}
+
+Node* createNode(void* data) {
+	Node* node = (Node*) malloc(sizeof(Node));
+	if (node == NULL)
+	{
+		printf("Error while adding element, couldn't allocate new element\n");
+	}
+	node->data = (void*) malloc(sizeof(void));
+	node->data = data;
+	node->next = NULL;
+}
+
+Node* getNode(int idx, List* list) {
+	if(idx > list->count-1 || idx < 0) {
+		printf("Index out of range\n");
+		return NULL;	
+	}
+	Node* node = list->head;
+	while(idx--) {
+		node = node->next;
+	}
+	return node;
+}
+
+Node* getTrailNode(List* list) {	
+	return getNode(list->count-1, list);
+}
+
+void* getDataFromList(int idx, List* list) {
+	return getNode(idx, list)->data;
+}
+
+bool insertNode(int idx, void* data, List* list) {
+	if (idx == 0) {
+		Node* node = createNode(data);
+		if (node == NULL) return false;
+		node->next = list->head;
+		list->head = node;
+		list->count++;
+		return true;
+	}
+
+	Node* previousNode = getNode(idx-1, list);
+	Node* newNode      = createNode(data);
+	if(previousNode == NULL || newNode == NULL) return false;
+	newNode->next = previousNode->next;
+	previousNode->next = newNode;
+	list->count++;
+	return true;
+}
+
+void appendNode(void* data, List* list) {
+	insertNode(list->count, data, list);
+}
 
 bool deleteNode(int idx, List* list) {
 	if (list->count <= 0 || idx > list->count-1 || idx < 0) return false;

@@ -16,7 +16,6 @@ class Node {
 	Node(void* data);
 	~Node();
 
-	void* getData(void);
 };
 
 
@@ -42,26 +41,20 @@ class List {
 	void deleteNode(int idx);
 
 	void deleteList(void);
+
+
+	// not necessary methods
+	void appendIntList(int data);
+
+	void appendCharList(char data);
+
+	int  getIntList(int idx);
+
+	char getCharList(int idx);
+
+	void setIntList(int idx, int data);
+
+	void setCharList(int idx, char data);
 };
 
-/*
-//////////////////////////////////////////// Fondamental functions :
-
-
-void deleteList(List* list);
-
-
-//////////////////////////////////////////// Bonus functions :
-void appendIntList(int data, List* list);
-
-void appendCharList(char data, List* list);
-
-int  getIntList(int idx, List* list);
-
-char getCharList(int idx, List* list);
-
-void setIntList(int idx, int data, List* list);
-
-void setCharList(int idx, char data, List* list);
-*/
 #endif

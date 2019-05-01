@@ -89,3 +89,34 @@ List::~List() {
 		delete getNode(i);
 	}
 }
+
+
+//////////////////////////////////////////////////////// Bonus methods
+void List::appendIntList(int data) {
+	int* p = (int*) malloc(sizeof(int));
+	*p = data;
+	appendNode((void*) p);
+}
+
+void List::appendCharList(char data) {
+	char* p = (char*) malloc(sizeof(char));
+	*p = data;
+	appendNode((void*) p);
+}
+
+int List::getIntList(int idx) {
+	return *((int*) getDataFromList(idx));
+}
+
+char List::getCharList(int idx) {
+	return *((char*) getDataFromList(idx));
+}
+
+
+void List::setIntList(int idx, int data) {
+	*((int*) getDataFromList(idx)) = data;
+}
+
+void List::setCharList(int idx, char data) {
+	*((char*) getDataFromList(idx)) = data;
+}
