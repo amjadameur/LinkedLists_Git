@@ -30,7 +30,7 @@ class List {
 
 	Node* getNode(int idx);
 
-	void* getDataFromList(int idx);
+	void* getData(int idx);
 
 	Node* getTrail(void);
 
@@ -40,21 +40,18 @@ class List {
 
 	void deleteNode(int idx);
 
-	void deleteList(void);
-
-
 	// not necessary methods
-	void appendIntList(int data);
+	void appendInt(int data);
 
-	void appendCharList(char data);
+	void appendChar(char data);
 
-	int  getIntList(int idx);
+	int  getInt(int idx);
 
-	char getCharList(int idx);
+	char getChar(int idx);
 
-	void setIntList(int idx, int data);
+	void setInt(int idx, int data);
 
-	void setCharList(int idx, char data);
+	void setChar(int idx, char data);
 };
 
 #endif

@@ -30,7 +30,7 @@ Node* List::getTrail() {
 	return getNode(count-1);
 }
 
-void* List::getDataFromList(int idx) {
+void* List::getData(int idx) {
 	return getNode(idx)->data;
 }
 
@@ -92,31 +92,31 @@ List::~List() {
 
 
 //////////////////////////////////////////////////////// Bonus methods
-void List::appendIntList(int data) {
+void List::appendInt(int data) {
 	int* p = (int*) malloc(sizeof(int));
 	*p = data;
 	appendNode((void*) p);
 }
 
-void List::appendCharList(char data) {
+void List::appendChar(char data) {
 	char* p = (char*) malloc(sizeof(char));
 	*p = data;
 	appendNode((void*) p);
 }
 
-int List::getIntList(int idx) {
-	return *((int*) getDataFromList(idx));
+int List::getInt(int idx) {
+	return *((int*) getData(idx));
 }
 
-char List::getCharList(int idx) {
-	return *((char*) getDataFromList(idx));
+char List::getChar(int idx) {
+	return *((char*) getData(idx));
 }
 
 
-void List::setIntList(int idx, int data) {
-	*((int*) getDataFromList(idx)) = data;
+void List::setInt(int idx, int data) {
+	*((int*) getData(idx)) = data;
 }
 
-void List::setCharList(int idx, char data) {
-	*((char*) getDataFromList(idx)) = data;
+void List::setChar(int idx, char data) {
+	*((char*) getData(idx)) = data;
 }
