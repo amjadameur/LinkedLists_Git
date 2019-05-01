@@ -4,10 +4,9 @@ Node::Node(void* data) {
 	this->data = data;
 }
 
-void* Node::getData(void) {
-	return data;
+Node::~Node() {
+	free(data);
 }
-
 
 List::List() {
 	count = 0;
@@ -27,12 +26,16 @@ Node* List::getNode(int idx) {
 	return node;
 }
 
-Node* List::getTrail(void) {
+Node* List::getTrail() {
 	return getNode(count-1);
 }
 
+void* List::getDataFromList(int idx) {
+	return getNode(idx)->data;
+}
+
 void List::insertNode(int idx, void* data) {
-	Node* newNode      = new Node(data);
+	Node* newNode = new Node(data);
 	if (idx == 0) {
 		newNode->next = head;
 		head = newNode;
@@ -42,5 +45,47 @@ void List::insertNode(int idx, void* data) {
 		newNode->next = previousNode->next;
 		previousNode->next = newNode;
 		count++;
+	}
+}
+
+void List::appendNode(void* data) {
+	insertNode(count, data);
+}
+
+void List::deleteNode(int idx) {
+	if (count <= 0 || idx > count-1 || idx < 0) return;
+
+	// element to be discarded is the head
+	if(idx == 0) {
+		Node* head = this->head;
+		this->head = this->head->next;
+		free(head->data);
+		free(head);
+		count--;		
+		return;		
+	}
+
+	// element to be discarded is the trail 
+	if(count-1 == idx) {
+		Node* elementPastTrail = getNode(count-2);
+		free(elementPastTrail->next->data);
+		free(elementPastTrail->next);
+		elementPastTrail->next = NULL;
+		count--;		
+		return;
+	}
+
+	Node* previousNode  = getNode(idx-1);
+	Node* currentNode   = getNode(idx);
+
+	previousNode->next = currentNode->next;
+	free(currentNode->data);
+	free(currentNode);
+	count--;
+}
+
+List::~List() {
+	for (int i = count-1; i >= 0; i--) {
+		delete getNode(i);
 	}
 }

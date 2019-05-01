@@ -14,6 +14,7 @@ class Node {
 
 	Node(void) {}
 	Node(void* data);
+	~Node();
 
 	void* getData(void);
 };
@@ -26,33 +27,26 @@ class List {
 	Node* head;
 
 	List();
+	~List();
 
 	Node* getNode(int idx);
 
-	//void* getDataFromList(int idx);
+	void* getDataFromList(int idx);
 
 	Node* getTrail(void);
 
 	void insertNode(int idx, void* data);
+	
+	void appendNode(void* data);
 
+	void deleteNode(int idx);
+
+	void deleteList(void);
 };
 
 /*
-////////////////////////////////////////// Fondamental functions :
+//////////////////////////////////////////// Fondamental functions :
 
-Node* createNode(void* data);
-
-Node* getNode(int idx, List* list);
-
-void* getDataFromList(int idx, List* list);
-
-Node* getTrail(List* list);
-
-bool insertNode(int idx, void* data, List* list);
-
-void appendNode(void* data, List* list);
-
-bool deleteNode(int idx, List* list);
 
 void deleteList(List* list);
 
